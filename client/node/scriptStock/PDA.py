@@ -21,6 +21,8 @@ import RPi.GPIO as GPIO
 def resultDefault():
     return '\n-'
 
+GPIO_PIN = 18
+
 # GPIOのモードをセットアップ（GPIOの番号を指定するように設定）
 GPIO.setmode(GPIO.BCM)
 # HPLCとつながったGPIOピンを出力モードに設定
@@ -28,9 +30,6 @@ GPIO.setup(GPIO_PIN, GPIO.OUT)
 
 ADC = ADS1256.ADS1256()
 ADC.ADS1256_init()
-
-
-
 
 try:
     if args.get:
