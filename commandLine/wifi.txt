@@ -1,0 +1,6 @@
+network={
+  ssid="IODATA-052d64-2G"
+  psk="SKake22987693"
+}
+
+/etc/wpa_supplicant/wpa_supplicant.conf
