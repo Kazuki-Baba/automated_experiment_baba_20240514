@@ -9,3 +9,6 @@ sudo mysql -u root -p -e "GRANT ALL ON dbserver.* TO baba@localhost"
 
 sudo mysql -u root -p -e "CREATE DATABASE dbclient"
 sudo mysql -u root -p -e "GRANT ALL ON dbclient.* TO baba@localhost"
+
+mysql -u baba -p0507 dbserver < ../mysql/dbserver.sql
+mysql -u baba -p0507 dbclient < ../mysql/dbclient.sql
