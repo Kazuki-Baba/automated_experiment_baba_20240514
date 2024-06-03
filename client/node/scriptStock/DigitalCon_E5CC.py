@@ -74,9 +74,10 @@ if args.get:
 # マニュアル操作量書き込み
 if args.setrun:
     # 温度を16進数に変換
-    t = int(args.set[0])
-    t_16 = t * 10 # 小数点がなくなるようにずらす（20.5℃なら205へ）
-    temp = hex(t_16)
+    t_input = float(args.setrun[0])
+    t_10 = t_input * 10 # 小数点がなくなるようにずらす（20.5℃なら205へ）
+    t_10_int = int(t_10)
+    temp = hex(t_10_int)
     temp_int = int(temp, 16)
     
     commandInput(0x2600, temp_int)
