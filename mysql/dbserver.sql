@@ -43,7 +43,7 @@ CREATE TABLE `actions` (
 
 LOCK TABLES `actions` WRITE;
 /*!40000 ALTER TABLE `actions` DISABLE KEYS */;
-INSERT INTO `actions` VALUES (1,'on','--on',0,0,NULL,NULL),(2,'get the value','--get',0,1,NULL,NULL),(3,'off','--off',0,0,NULL,NULL),(4,'waiting','wait',1,0,NULL,NULL),(5,'set infusion rate and run','--iraterun',2,0,NULL,NULL),(6,'set withdraw rate','--wrate',2,0,NULL,NULL),(7,'infusion run','--irun',0,0,NULL,NULL),(8,'withdraw run','--wrun',0,0,NULL,NULL),(9,'change position','--changePos',1,0,NULL,NULL),(10,'wait for steady-sate','--judge',0,0,NULL,NULL),(11,'set temp. and run','--setrun',1,0,NULL,NULL),(12,'ready and set sampling time','--ready',1,0,NULL,NULL),(13,'sampling','--sample',0,0,NULL,NULL),(14,'alert','alert',1,0,NULL,NULL),(15,'set flow rate[mL/min] and run','--run',1,0,NULL,NULL);
+INSERT INTO `actions` VALUES (1,'on','--on',0,0,NULL,NULL),(2,'get the value','--get',0,1,NULL,NULL),(3,'off','--off',0,0,NULL,NULL),(4,'waiting','wait',1,0,NULL,NULL),(5,'set infusion rate and run','--iraterun',2,0,NULL,NULL),(6,'set withdraw rate','--wrate',2,0,NULL,NULL),(7,'infusion run','--irun',0,0,NULL,NULL),(8,'withdraw run','--wrun',0,0,NULL,NULL),(9,'change position','--changePos',1,0,NULL,NULL),(10,'wait for steady-sate','--judge',0,0,NULL,NULL),(11,'set temp. and run','--setrun',1,0,NULL,NULL),(12,'ready and set sampling time','--ready',1,0,NULL,NULL),(13,'sampling','--sample',0,0,NULL,NULL),(14,'alert','alert',1,0,NULL,NULL),(15,'set flow rate[mL/min] and run','--run',1,0,NULL,NULL),(16,'set temperature [℃],'--set',1,0,NULL,NULL);
 /*!40000 ALTER TABLE `actions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -70,7 +70,7 @@ CREATE TABLE `device_type_action_links` (
 
 LOCK TABLES `device_type_action_links` WRITE;
 /*!40000 ALTER TABLE `device_type_action_links` DISABLE KEYS */;
-INSERT INTO `device_type_action_links` VALUES (1,1,1,NULL,NULL),(2,1,2,NULL,NULL),(3,1,3,NULL,NULL),(4,1,4,NULL,NULL),(5,1,5,NULL,NULL),(6,1,6,NULL,NULL),(7,1,7,NULL,NULL),(8,1,8,NULL,NULL),(10,2,3,NULL,NULL),(11,2,5,NULL,NULL),(12,2,6,NULL,NULL),(13,2,7,NULL,NULL),(14,2,8,NULL,NULL),(15,3,9,NULL,NULL),(16,4,1,NULL,NULL),(17,4,2,NULL,NULL),(18,4,3,NULL,NULL),(19,5,1,NULL,NULL),(20,5,2,NULL,NULL),(21,5,3,NULL,NULL),(22,6,4,NULL,NULL),(23,1,9,NULL,NULL),(24,5,10,NULL,NULL),(26,5,11,NULL,NULL),(27,1,11,NULL,NULL),(28,7,3,NULL,NULL),(29,7,12,NULL,NULL),(30,7,13,NULL,NULL),(31,6,14,NULL,NULL),(32,8,2,NULL,NULL),(33,8,1,NULL,NULL),(34,9,2,NULL,NULL),(35,9,3,NULL,NULL),(36,9,15,NULL,NULL),(37,10,2,NULL,NULL),(38,10,10,NULL,NULL),(39,10,11,NULL,NULL);
+INSERT INTO `device_type_action_links` VALUES (1,1,1,NULL,NULL),(2,1,2,NULL,NULL),(3,1,3,NULL,NULL),(4,1,4,NULL,NULL),(5,1,5,NULL,NULL),(6,1,6,NULL,NULL),(7,1,7,NULL,NULL),(8,1,8,NULL,NULL),(10,2,3,NULL,NULL),(11,2,5,NULL,NULL),(12,2,6,NULL,NULL),(13,2,7,NULL,NULL),(14,2,8,NULL,NULL),(15,3,9,NULL,NULL),(16,4,1,NULL,NULL),(17,4,2,NULL,NULL),(18,4,3,NULL,NULL),(19,5,1,NULL,NULL),(20,5,2,NULL,NULL),(21,5,3,NULL,NULL),(22,6,4,NULL,NULL),(23,1,9,NULL,NULL),(24,5,10,NULL,NULL),(26,5,11,NULL,NULL),(27,1,11,NULL,NULL),(28,7,3,NULL,NULL),(29,7,12,NULL,NULL),(30,7,13,NULL,NULL),(31,6,14,NULL,NULL),(32,8,2,NULL,NULL),(33,8,1,NULL,NULL),(34,9,2,NULL,NULL),(35,9,3,NULL,NULL),(36,9,15,NULL,NULL),(37,10,2,NULL,NULL),(38,10,10,NULL,NULL),(39,10,16,NULL,NULL);
 /*!40000 ALTER TABLE `device_type_action_links` ENABLE KEYS */;
 UNLOCK TABLES;
 
