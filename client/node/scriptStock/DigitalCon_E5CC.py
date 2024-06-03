@@ -89,3 +89,16 @@ if args.setrun:
 
 # ソフトリセット
 # e5cc_h.execute(Address, cst.WRITE_SINGLE_REGISTER, 0x0000, output_value=0x0600)
+
+if args.set:
+    # 温度を16進数に変換
+    t_set_input = float(args.set[0])
+    t_set_10 = t_set_input * 10 # 小数点がなくなるようにずらす（20.5℃なら205へ）
+    t_set_10_int = int(t_set_10)
+    temp_set = hex(t_set_10_int)
+    temp_set_int = int(temp_set, 16)
+    
+    commandInput(0x2600, temp_set_int)
+    A1 = commandReception(0x2600)
+    #print('read 0x2103 ',A1[0])
+
