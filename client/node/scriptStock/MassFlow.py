@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+# 未完成
 
 #コマンドライン引数オプション
 import argparse
