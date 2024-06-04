@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 # 未完成
+# configファイルを入れなおす
 
 #コマンドライン引数オプション
 import argparse
