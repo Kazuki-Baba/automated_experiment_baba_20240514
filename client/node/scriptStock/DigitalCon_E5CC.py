@@ -2,7 +2,6 @@
 
 # コマンドライン引数オプション
 # パッケージインポート
-import struct
 import time
 import argparse
 import serial
