@@ -14,8 +14,6 @@ parser = argparse.ArgumentParser(description='コマンドライン引数で動�
 
 parser.add_argument('--get', help='温度をget', action='store_true')
 parser.add_argument('--set', help='温度をset', nargs=1)
-parser.add_argument('--on', help='start heating', action='store_true')
-parser.add_argument('--off', help='stop heating', action='store_true')
 parser.add_argument(
     '--sstate', help='waiting for stady state. set temp and maxTime', nargs=1)
 parser.add_argument('--setrun', help='温度をset&実行', nargs=1)
@@ -32,24 +30,14 @@ def resultDefault():
 def resultERROR():
     return 'ERROR'
 
-'''
-# シリアル通信設定
-ser = serial.Serial()
-ser.port = '/dev/ttyUSB0'
-ser.baudrate = 9600
-ser.bytesize = serial.EIGHTBITS
-ser.stopbits = serial.STOPBITS_ONE
-ser.parity = serial.PARITY_NONE
-ser.timeout = 20
-'''
-
 # ModBus通信設定
 PORT = '/dev/ttyUSB0'
-e5cc_h = modbus_rtu.RtuMaster(serial.Serial(port=PORT, baudrate=9600, bytesize=8, parity='N', stopbits=1))
+e5cc_h = modbus_rtu.RtuMaster(serial.Serial(port=PORT, baudrate=9600, bytesize=8, parity='N', stopbits=2))
 e5cc_h.set_timeout(20)
 Address = 1 # ユニット番号指定
 
-# 書き込み許可
+# 書き込み許可(初期設定以外の時はコメントアウト推奨)
+# 動作指令の書き込み変数アドレスは0x0000
 e5cc_h.execute(Address, cst.WRITE_SINGLE_REGISTER, 0x0000, output_value=0x0001)
 
 def commandInput(command, output):  # コマンド送信
@@ -68,7 +56,7 @@ def commandReception(command):  # 受信
 # 現在温度読み取り
 if args.get:
     A1 = commandReception(0x2000)
-    print(A1[0] / 10)
+    print(A1[0] / 10) # 小数点の分10で割って調整
 
 
 # マニュアル操作量書き込み
@@ -80,16 +68,11 @@ if args.setrun:
     temp = hex(t_10_int)
     temp_int = int(temp, 16)
     
-    commandInput(0x2600, temp_int)
-    A1 = commandReception(0x2600)
-    #print('read 0x2103 ',A1[0])
+    commandInput(0x2103, temp_int)
+    A1 = commandReception(0x2103)
 
 
-
-
-# ソフトリセット
-# e5cc_h.execute(Address, cst.WRITE_SINGLE_REGISTER, 0x0000, output_value=0x0600)
-
+# 定常待ちで使うアクション
 if args.set:
     # 温度を16進数に変換
     t_set_input = float(args.set[0])
@@ -98,7 +81,9 @@ if args.set:
     temp_set = hex(t_set_10_int)
     temp_set_int = int(temp_set, 16)
     
-    commandInput(0x2600, temp_set_int)
-    A1 = commandReception(0x2600)
-    #print('read 0x2103 ',A1[0])
+    commandInput(0x2103, temp_set_int)
+    A1 = commandReception(0x2103)
 
+    
+# ソフトリセット
+# e5cc_h.execute(Address, cst.WRITE_SINGLE_REGISTER, 0x0000, output_value=0x0600)
