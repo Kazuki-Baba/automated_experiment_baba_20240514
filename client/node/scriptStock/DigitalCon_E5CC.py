@@ -37,7 +37,7 @@ Address = 1 # ユニット番号指定
 
 # 書き込み許可(初期設定以外の時はコメントアウト推奨)
 # 動作指令の書き込み変数アドレスは0x0000
-e5cc_h.execute(Address, cst.WRITE_SINGLE_REGISTER, 0x0000, output_value=0x0001)
+# e5cc_h.execute(Address, cst.WRITE_SINGLE_REGISTER, 0x0000, output_value=0x0001)
 
 def commandInput(command, output):  # コマンド送信
     # e5cc_h.execute(ユニットNo, 書き込み指定, 書き込む変数のアドレス, output_value=書き込む値（16進数）)
@@ -49,7 +49,6 @@ def commandReception(command):  # 受信
     # e5cc_h.execute(ユニットNo, 読み取り指定, 読み取る変数のアドレス, 変数の個数)
     res = e5cc_h.execute(Address, cst.READ_HOLDING_REGISTERS, command, 1)
     return res
-    # print(rx)
 
 
 # 現在温度読み取り
@@ -83,6 +82,31 @@ if args.set:
     commandInput(0x2103, temp_set_int)
     A1 = commandReception(0x2103)
 
+# 他にもいるかな？
+errorMsg1 = ["警報2", "警報1", "HB警報（CT2）", "HB警報（CT1）"]
+errorMsg2 = ["ポテンショメータ入力異常", "入力異常", "-", "RSP入力異常", "HS(SSR故障)警報", "ADコンバータ異常"]
+
+if args.status:
+    st = commandReception(0x2001)
+    stat = st[0]
+    status_bits = [int(bit) for bit in f"{stat:016b}"]
+    #print(st[0])
+    #print(status_bits)
+
+    status_bits1 = status_bits[2:6]
+    status_bits2 = status_bits[8:14]
+    #print(status_bits2)
+
+    if not (1 in status_bits1 and 1 in status_bits2):
+        print(resultDefault())
+    else:
+        print(resultERROR())
+        for i in range(0, len(status_bits1)):
+            if status_bits1[i] == 1:
+                print(errorMsg1[i])
+        for i in range(len(status_bits2)):
+            if status_bits2[i] == 1:
+                print(errorMsg2[i])
     
 # ソフトリセット
 # e5cc_h.execute(Address, cst.WRITE_SINGLE_REGISTER, 0x0000, output_value=0x0600)
