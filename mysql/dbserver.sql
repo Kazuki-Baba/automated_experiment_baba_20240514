@@ -96,7 +96,7 @@ CREATE TABLE `device_types` (
 
 LOCK TABLES `device_types` WRITE;
 /*!40000 ALTER TABLE `device_types` DISABLE KEYS */;
-INSERT INTO `device_types` VALUES (1,'testType',NULL,NULL),(2,'syringePump',NULL,NULL),(3,'6-way valve',NULL,NULL),(4,'thermometer',NULL,NULL),(5,'temperature controller',NULL,NULL),(6,'No device',NULL,NULL),(7,'fraction collector',NULL,NULL),(8,'PDA',NULL,NULL),(9,'Mass Flow Controler',NULL,NULL),(10,'Digital Temp Controler',NULL,NULL);
+INSERT INTO `device_types` VALUES (1,'testType',NULL,NULL),(2,'syringePump',NULL,NULL),(3,'6-way valve',NULL,NULL),(4,'thermometer',NULL,NULL),(5,'temperature controller',NULL,NULL),(6,'No device',NULL,NULL),(7,'fraction collector',NULL,NULL),(8,'PDA',NULL,NULL),(9,'Mass Flow Controler',NULL,NULL),(10,'Digital Temp Controller',NULL,NULL);
 /*!40000 ALTER TABLE `device_types` ENABLE KEYS */;
 UNLOCK TABLES;
 
