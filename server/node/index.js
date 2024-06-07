@@ -1674,7 +1674,7 @@ function emitScriptByDeviceType(device,emitTarget){
   Object.keys(device).forEach(function (key){
     let deviceObj = device[key];
     console.log(deviceObj);
-    if((deviceObj.device_type_name == "thermometer") || (deviceObj.device_type_name == "temperature controller")){
+    if((deviceObj.device_type_name == "thermometer") || (deviceObj.device_type_name == "temperature controller") || (deviceObj.device_type_name == "Digital Temp Controller")){
       timeLogs[deviceObj.resultId] = {
         time: [],
         data: [],
