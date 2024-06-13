@@ -58,7 +58,7 @@ def rateset():
       if args.rateset is not None:
         rate = args.rateset[0]
         rate100 = float(rate) * 100
-        rate100_int = int(rate100)
+        rate100_int = int(round(rate100))
         rate_cmd = f"{rate100_int:05}"
         cmd = f";01,S3,{rate_cmd}\r\n"
         commandInput(cmd)
