@@ -68,6 +68,10 @@ if args.setrun:
     
     commandInput(0x2103, temp_int)
     A1 = commandReception(0x2103)
+    if A1:
+        print(resultDefault())
+    else:
+        print(resultERROR())
 
 
 # 定常待ちで使うアクション
