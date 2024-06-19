@@ -42,9 +42,11 @@ if args.run:
     voltage_input = flowrate / 20
     
     DAC.DAC8532_Out_Voltage(0x30, voltage_input)
+    print(resultDefault())
 
 # これいる？
 if args.off:
     GPIO.cleanup()
+    print(resultDefault())
 
 
