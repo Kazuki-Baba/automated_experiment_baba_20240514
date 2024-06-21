@@ -62,7 +62,7 @@ if args.setrun:
     # 温度を16進数に変換
     t_input = float(args.setrun[0])
     t_10 = t_input * 10 # 小数点がなくなるようにずらす（20.5℃なら205へ）
-    t_10_int = int(round(t_10))
+    t_10_int = int(round(t_10)) # 桁落ちしないようにround追加、確認はまだ
     temp = hex(t_10_int)
     temp_int = int(temp, 16)
     
