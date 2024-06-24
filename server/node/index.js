@@ -1700,7 +1700,7 @@ function emitScriptByDeviceType(device,emitTarget){
       let scriptOffString = deviceObj.script + " --off";
       let scriptOnString = deviceObj.script + " --on";
       client.to(deviceObj.ClientNumber).emit(emitTarget, {scriptString: scriptString, scriptOffString: scriptOffString, scriptOnString: scriptOnString, deviceId:deviceObj.resultId});
-      tempEmitCNArray.push(deviceObj.ClientNumber);
+      concEmitCNArray.push(deviceObj.ClientNumber);
     }
 
   });
@@ -1714,7 +1714,7 @@ function emitScriptByDeviceType(device,emitTarget){
 
   // 20240323_baba_added
   if(concEmitCNArray.length > 0){
-    const set = new Set(statusEmitCNArray);
+    const set = new Set(concEmitCNArray);
     concEmitArray = [...set];//送信先を重複なく記録
   };
 
