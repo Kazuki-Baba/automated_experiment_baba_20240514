@@ -17,6 +17,7 @@ parser.add_argument(
     '--sstate', help='waiting for stady state. set temp and maxTime', nargs=1)
 parser.add_argument('--setrun', help='温度をset&実行', nargs=1)
 parser.add_argument('--status', help='check the status', action='store_true')
+parser.add_argument('--setandsstate', help='温度をset & 定常待ち', nargs=1)
 
 args = parser.parse_args()
 
@@ -57,7 +58,7 @@ if args.get:
     print(A1[0] / 10) # 小数点の分10で割って調整
 
 
-# マニュアル操作量書き込み
+# 目標温度書き込み
 if args.setrun:
     # 温度を16進数に変換
     t_input = float(args.setrun[0])
@@ -72,6 +73,41 @@ if args.setrun:
         print(resultDefault())
     else:
         print(resultERROR())
+
+# 目標温度書き込み＋温度定常待ち
+if args.setandsstate:
+    # 温度を16進数に変換
+    t_input = float(args.setrun[0])
+    t_10 = t_input * 10 # 小数点がなくなるようにずらす（20.5℃なら205へ）
+    t_10_int = int(round(t_10)) # 桁落ちしないようにround追加、確認はまだ
+    temp = hex(t_10_int)
+    setTemp = int(temp, 16)
+    # 目標温度書き込み
+    commandInput(0x2103, setTemp)
+    A1 = commandReception(0x2103)
+
+    # エラー処理
+    if A1 is NULL:
+        print(resultERROR())
+        break
+
+    tempErr = 0.5 # 温度の許容範囲[℃]を設定、これは第二引数にするべき？
+    count = 0
+    sleepTime = 5 # 判定の間隔 [s]
+
+    # 定常待ちの処理
+    while count <= 10: # とりあえず10回判定
+        A2 = commandReception(0x2000)
+        nowTemp = A2[0] / 10
+        if abs(nowTemp - setTemp) <= tempErr:
+            count += 1
+            if count >= 10:
+                print('success')
+                break
+            time.sleep(sleepTime)
+        else:
+            count = 0
+            time.sleep(sleepTime)
 
 
 # 定常待ちで使うアクション
