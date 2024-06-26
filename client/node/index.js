@@ -3,6 +3,7 @@ const mysql = require('mysql');
 const util = require('util');//execをawaitさせる
 const childProcess = require('child_process');
 const exec = util.promisify(childProcess.exec);
+const { spawn } = require('child_process'); //20240625_baba
 
 const serverAdress = 'localhost';
 
@@ -207,6 +208,33 @@ function experimentDoingExec(a) {
               }
               setTimeout(() => {next()}, 100);//100 ms後に次にtask実行。これによりシリアル通信のコマンドバッティングを防ぐ
           }); 
+        } else if (a.procedure.argument == "--test") { // 20240625_baba
+	    const pythonPath = 'python3';
+	    const scriptPath = './script/' + a.usedDevice.script;
+	    const pythonProcess = spawn(pythonPath, [scriptPath, a.procedure.argument, a.procedure.usedDetail]);
+
+	    pythonProcess.stdout.on('data', (data) => {
+		client.emit('experimentRes', { res: data.toString(), procedure: a.procedure });
+	    });
+
+            pythonProcess.stderr.on('data', (data) => {
+		console.log(`stderr: ${data}`);
+		client.emit('experimentRes', { res: 'not connected', procedure: a.procedure });
+	    });
+
+	    pythonProcess.on('close', (code) => {
+		console.log(`finished with code ${code}`);
+	    });
+
+	    pythonProcess.on('error', (err) => {
+	        console.error(`failed to start subprocess: ${err.message}`);
+		console.error(`path: ${err.path}`);
+		console.error(`spawn args: ${err.spawnargs}`);
+	    });
+
+	    setTimeout(() => {
+		next();
+	    }, 100); //above all
         } else {
         exec(pythonArg + a.usedDevice.script + " "+a.procedure.argument+' '+a.procedure.usedDetail,(err,stdout,stderr)=>{
             if(stdout){
