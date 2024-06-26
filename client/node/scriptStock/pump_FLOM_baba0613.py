@@ -10,7 +10,7 @@ parser = argparse.ArgumentParser(description='コマンドライン引数で動�
 
 parser.add_argument('--on', help='送液の開始', action='store_true')
 parser.add_argument('--off', help='送液の終了', action='store_true')
-parser.add_argument('--rateset', help='流量変更 (値)', nargs=1)
+parser.add_argument('--rateset', help='流量変更 (値)', nargs=2)
 
 args = parser.parse_args()
 
