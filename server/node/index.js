@@ -1674,7 +1674,7 @@ function emitScriptByDeviceType(device,emitTarget){
   Object.keys(device).forEach(function (key){
     let deviceObj = device[key];
     console.log(deviceObj);
-    if((deviceObj.device_type_name == "thermometer") || (deviceObj.device_type_name == "temperature controller") || (deviceObj.device_type_name == "Digital Temp Controller")){
+    if((deviceObj.device_type_name == "thermometer") || (deviceObj.device_type_name == "temperature controller") || (deviceObj.device_type_name == "Digital Temp Controller")){ //20240607_baba
       timeLogs[deviceObj.resultId] = {
         time: [],
         data: [],
