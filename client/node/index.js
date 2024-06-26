@@ -208,13 +208,13 @@ function experimentDoingExec(a) {
               }
               setTimeout(() => {next()}, 100);//100 ms後に次にtask実行。これによりシリアル通信のコマンドバッティングを防ぐ
           }); 
-        } else if (a.procedure.argument == "--test") { // 20240625_baba
+        } else if (a.procedure.argument == "--setandsstate") { // 20240625_baba
 	    const pythonPath = 'python3';
 	    const scriptPath = './script/' + a.usedDevice.script;
 	    const pythonProcess = spawn(pythonPath, [scriptPath, a.procedure.argument, a.procedure.usedDetail]);
 
 	    pythonProcess.stdout.on('data', (data) => {
-		client.emit('experimentRes', { res: data.toString(), procedure: a.procedure });
+		client.emit('experimentRes', { res: 'temp set success', procedure: a.procedure });
 	    });
 
             pythonProcess.stderr.on('data', (data) => {
@@ -226,11 +226,11 @@ function experimentDoingExec(a) {
 		console.log(`finished with code ${code}`);
 	    });
 
-	    pythonProcess.on('error', (err) => {
-	        console.error(`failed to start subprocess: ${err.message}`);
-		console.error(`path: ${err.path}`);
-		console.error(`spawn args: ${err.spawnargs}`);
-	    });
+	    //pythonProcess.on('error', (err) => {
+	        //console.error(`failed to start subprocess: ${err.message}`);
+		//console.error(`path: ${err.path}`);
+		//console.error(`spawn args: ${err.spawnargs}`);
+	    //});
 
 	    setTimeout(() => {
 		next();
