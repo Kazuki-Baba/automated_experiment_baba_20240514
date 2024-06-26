@@ -19,7 +19,7 @@ args = parser.parse_args()
 
 # sirial通信開通
 ser = serial.Serial()
-ser.port = 'COM3'
+ser.port = '/dev/ttyUSB0'
 ser.baudrate = 9600
 ser.bytesize = serial.EIGHTBITS
 ser.stopbits = serial.STOPBITS_ONE
@@ -33,7 +33,7 @@ ser.dsrdtr = False
 def commandInput(cmd):  #コマンド送信
     ser.write( cmd.encode() )
     ser.flush()
-    time.sleep(5)
+    time.sleep(0.1)
 
 def commandReception(ser):   #受信
     res=ser.read_all()
