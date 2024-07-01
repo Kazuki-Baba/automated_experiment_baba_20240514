@@ -11,6 +11,7 @@ from modbus_tk import modbus_rtu
 # いつもの
 parser = argparse.ArgumentParser(description='コマンドライン引数で動作を分岐')
 
+parser.add_argument('--off'. help='恒温槽off', action='store_true')
 parser.add_argument('--get', help='温度をget', action='store_true')
 parser.add_argument('--set', help='温度をset', nargs=1)
 parser.add_argument(
@@ -56,6 +57,18 @@ def commandReception(command):  # 受信
 if args.get:
     A1 = commandReception(0x2000)
     print(A1[0] / 10) # 小数点の分10で割って調整
+
+# 恒温槽off（室温２５℃へ戻す）
+if args.off:
+    temp_reset = 250
+    temp_reset16 = hex(temp_reset)
+    temp_reset16_int = int(temp_reset16)
+    commandInput(0x2103, temp_reset16_int)
+    A1 = commandReception(0x2103)
+    if A1:
+        print(resultDefault())
+    else:
+        print(resultERROR())
 
 
 # 目標温度書き込み
