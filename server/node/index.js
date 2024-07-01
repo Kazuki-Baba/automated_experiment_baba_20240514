@@ -223,7 +223,7 @@ function experimentDoing(clientRes, isAlreadyAdd = false) {
               con.query(
                 "INSERT INTO result_data (run_id, result_block_id, data, created_at) VALUES (?)",
                 [[
-                  clientRes.procedure.resultProcedureId,
+                  runInfo.id,
                   runId,
                   clientRes.res,
                   expDate,
@@ -1610,12 +1610,12 @@ client.on("connection", (socket) => {
 
   socket.on("clientActionResult", (result, device) => {
     srvUser.emit("clientActionResult", result, device);
-    // 20240313_baba_added
+    /* 20240313_baba_added
     con.query(
       "INSERT INTO result_data (run_id, result_block_id, data, created_at) VALUES (?)",
       [[1, 1, result, '2024-03-19 12:00:00']],
     );
-    // above_all
+    */ above_all
   });
 
   socket.on("clientExitProcess", (a) => {
