@@ -54,6 +54,7 @@ def off():
     res=commandReception(ser)
     print(res)
 
+# rateset とrunをまとめる
 def rateset():
       if args.rateset is not None:
         rate = args.rateset[0]
