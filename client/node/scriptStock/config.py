@@ -27,6 +27,8 @@
 # THE SOFTWARE.
 #
 
+# ADのみ対応
+
 
 import spidev
 import RPi.GPIO as GPIO
