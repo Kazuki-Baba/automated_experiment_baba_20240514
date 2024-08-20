@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-# 未完成
+# 未完成 
+# 更正もしていない
 # configファイルを入れなおす
 
 #コマンドライン引数オプション
@@ -46,6 +47,7 @@ if args.run:
 
 # これいる？
 if args.off:
+    DAC.DAC8532_Out_Voltage(0x30, 0)
     GPIO.cleanup()
     print(resultDefault())
 
