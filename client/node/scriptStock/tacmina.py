@@ -66,8 +66,9 @@ def off():
 
 def rateSetRun(cmd):
     on()
-    cmd = cmd*655
-    cmd = f"A,00,{cmd}\r"
+    cmd = cmd*655.36
+    cmd_int = round(cmd)
+    cmd = f"A,00,{cmd_int}\r"
     #print(cmd)
     commandInput(cmd)
     res=commandReception(ser)
