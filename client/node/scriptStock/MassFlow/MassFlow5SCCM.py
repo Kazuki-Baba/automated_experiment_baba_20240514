@@ -29,7 +29,7 @@ ADC.ADS1256_init()
 
 if args.get:
     ADC_Value = ADC.ADS1256_GetAll()
-    voltage = ADC_Value[2]*5.0/0x7fffff
+    voltage = ADC_Value[2]*5.0/0x7fffff # AD2
     
     #flowrate = voltage * 9.66886 + 2.64794 # 50SCCM
     flowrate = voltage * 2.5  #20 SCCM
