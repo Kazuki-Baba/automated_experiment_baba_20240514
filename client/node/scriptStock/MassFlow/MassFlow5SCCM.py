@@ -31,8 +31,10 @@ if args.get:
     ADC_Value = ADC.ADS1256_GetAll()
     voltage = ADC_Value[2]*5.0/0x7fffff
     
-    #flowrate = voltage * 9.66886 + 2.64794
-    flowrate = voltage * 2.5
+    #flowrate = voltage * 9.66886 + 2.64794 # 50SCCM
+    flowrate = voltage * 2.5  #20 SCCM
+    
+    '''
     f_list = []
     
     try:
@@ -48,14 +50,15 @@ if args.get:
 
     except KeyboardInterrupt:
         print(f_list)
+    '''
    
 
     #print(flowrate)
 
 if args.run:
     flowrate = args.run[0]
-    #voltage_input = (flowrate * 0.10458 - 0.28856) * 1.00809 * 2.5
-    voltage_input = float(flowrate) * 25 / 100
+    #voltage_input = (flowrate * 0.10458 - 0.28856) * 1.00809 * 2.5 # 50SCCM
+    voltage_input = float(flowrate) * 25 / 100 # 20 SCCM
 
     DAC.DAC8532_Out_Voltage(0x30, voltage_input)
     print(resultDefault())
