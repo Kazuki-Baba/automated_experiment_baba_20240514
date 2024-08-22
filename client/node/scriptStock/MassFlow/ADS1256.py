@@ -1,4 +1,4 @@
-import config_ADDA
+import config
 import RPi.GPIO as GPIO
 
 
