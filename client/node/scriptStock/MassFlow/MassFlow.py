@@ -57,7 +57,7 @@ if args.get:
 
 if args.run:
     flowrate = args.run[0]
-    #voltage_input = (flowrate * 0.10458 - 0.28856) * 1.00809 * 2.5 # 50SCCM
+    #voltage_input = (flowrate * 0.10458 - 0.28856) * 1.00809 # 50SCCM
     voltage_input = float(flowrate) * 25 / 100 # 20 SCCM
 
     DAC.DAC8532_Out_Voltage(0x30, voltage_input)
