@@ -185,36 +185,7 @@ function experimentDoingExec(a) {
             client.emit('experimentRes',{res:stdout,procedure:a.procedure});
             setTimeout(() => {next()}, 100);//100 ms後に次にtask実行。これによりシリアル通信のコマンドバッティングを防ぐ
         });
-      } else if (a.procedure.argument == "--baba") { //baba_modified_20240829
-            let dataReceived = false;
-            const pythonPath = 'python3';
-            const scriptPath = './script/' + a.usedDevice.script;
-            const pythonProcess = spawn(pythonPath, [scriptPath, a.procedure.argument]);
-
-            pythonProcess.stdout.on('data', (data) => {
-              if (!dataReceived) {
-                client.emit('experimentRes', { res: data.toString(), procedure: a.procedure });
-                setTimeout(() => {next()}, 100);
-                dataReceived = true;
-              } else {
-                a.procedure.result = data.toString();
-                client.emit('experimentResUpdate', { procedure: a.procedure });
-                //console.log(a.procedure);
-                console.log(data.toString());
-              }
-            });
-
-            pythonProcess.stderr.on('data', (data) => {
-              console.log(`stderr: ${data}`);
-              client.emit('experimentRes', { res: 'not connected', procedure: a.procedure });
-            });
-
-            pythonProcess.on('close', (code) => {
-              console.log(`finished with code ${code}`);
-            });
-      //above all
       }	else {
-        
         exec(pythonArg + a.usedDevice.script + " "+a.procedure.argument,(err,stdout,stderr)=>{
         if(stdout){
 	  //console.log(stdout);
@@ -237,7 +208,7 @@ function experimentDoingExec(a) {
               }
               setTimeout(() => {next()}, 100);//100 ms後に次にtask実行。これによりシリアル通信のコマンドバッティングを防ぐ
           }); 
-        } else if (a.procedure.argument == "--setandsstate") { // 20240625_baba
+        } else if (a.procedure.argument == "--setandsstate") { // 20240625_baba_無理なので消しましょう
             const pythonPath = 'python3';
             const scriptPath = './script/' + a.usedDevice.script;
             const pythonProcess = spawn(pythonPath, [scriptPath, a.procedure.argument, a.procedure.usedDetail]);
@@ -265,19 +236,19 @@ function experimentDoingExec(a) {
               next();
             }, 100); //above all
         } else if (a.procedure.argument == "--runPI") { //baba_added_20240827
-            let dataReceived = false
+            let dataReceived = false // 出力を受け取るフラグ
             const pythonPath = 'python3';
             const scriptPath = './script/' + a.usedDevice.script;
-            const Details = a.procedure.usedDetail.split(' '); // baba_modified_20240828
+            const Details = a.procedure.usedDetail.split(' '); // baba_modified_20240828　そのままだと1つの文字列として認識されるので、空白で分割
             //console.log(Details);
             const pythonProcess = spawn(pythonPath, [scriptPath, a.procedure.argument, ...Details]); // baba_modified_20240828
             
             pythonProcess.stdout.on('data', (data) => {
-              if (!dataReceived) {
+              if (!dataReceived) { // 初めて出力データを受け取る時の処理（いつもの）
                 client.emit('experimentRes', { res: data.toString(), procedure: a.procedure });
                 setTimeout(() => {next()}, 100);
                 dataReceived = true;
-              } else {
+              } else { // 2回目以降に出力データ受け取るときは値を更新するための別のイベントを送信、こうしないと手順が狂う
                 a.procedure.result = data.toString();
                 client.emit('experimentResUpdate', { procedure: a.procedure });
                 //console.log(a.procedure);
