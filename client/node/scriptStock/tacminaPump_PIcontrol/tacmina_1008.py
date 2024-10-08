@@ -34,7 +34,7 @@ ser.xonxoff = False
 ser.timeout = 50
 
 # baba_modified_20241008
-serial_lock = threading.Lock()
+# serial_lock = threading.Lock()
 
 obj = ElectricScale('/dev/ttyUSB0') 
 
@@ -52,14 +52,14 @@ cmd = "A,00,650\r"
 
 # baba_modified_commandInput & Reception_20241008
 def commandInput(cmd):  #コマンド送信
-    with serial_lock:
-        ser.write( cmd.encode() )
-        ser.flush()
+    #with serial_lock:
+    ser.write( cmd.encode() )
+    ser.flush()
     time.sleep(0.05)
 
 def commandReception(ser):   #受信
-    with serial_lock:
-        res=ser.read_all()
+    #with serial_lock:
+    res=ser.read_all()
     res=res.decode()
     return res
 
