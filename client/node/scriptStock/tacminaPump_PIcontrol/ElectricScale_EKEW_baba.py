@@ -7,7 +7,8 @@ import argparse
 import csv
 import time
 import shelve
-import threading
+# baba_modified_20241008
+# import threading 
 
 """
 ports = list(serial.tools.list_ports.comports())
@@ -55,7 +56,7 @@ class ElectricScale:
 
     def __init__(self, tty: str):
         # Initialize this class
-        self.lock = threading.Lock()
+        # self.lock = threading.Lock()
         self.isPortOpen = False
         self.OpenPort(tty)
 
@@ -72,11 +73,11 @@ class ElectricScale:
         return self.isPortOpen
     
     def sendCommand(self, cmd:str):
-        with self.lock:
-            cmd = cmd_Convert(cmd)
-            #print(cmd)
-            self.serialport.write(cmd)
-            return
+        #with self.lock:
+        cmd = cmd_Convert(cmd)
+        #print(cmd)
+        self.serialport.write(cmd)
+        return
     
     def readSer(self):
         res = str(self.serialport.readline())
@@ -89,16 +90,16 @@ class ElectricScale:
     
     # 送液中に計測できるように変更
     def getWeight(self):
-        with self.lock:
-            cmd = 'Q\r\n' # 1回出力
-            self.sendCommand(cmd)
-            res = self.readSer()
-            # print(res)
-            #head = res[0:2]
-            val = float(res[3:12])
-            unit = res[12:15]
-            # print(head, val, unit)
-            return [val, unit]
+        #with self.lock:
+        cmd = 'Q\r\n' # 1回出力
+        self.sendCommand(cmd)
+        res = self.readSer()
+        # print(res)
+        #head = res[0:2]
+        val = float(res[3:12])
+        unit = res[12:15]
+        # print(head, val, unit)
+        return [val, unit]
 
         '''
         for i in range(10):
