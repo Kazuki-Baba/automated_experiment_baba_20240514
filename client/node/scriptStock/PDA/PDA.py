@@ -21,7 +21,7 @@ import RPi.GPIO as GPIO
 def resultDefault():
     return '\n-'
 
-GPIO_PIN = 18
+GPIO_PIN = 16
 
 # GPIOのモードをセットアップ（GPIOの番号を指定するように設定）
 GPIO.setmode(GPIO.BCM)
@@ -44,6 +44,7 @@ try:
         # HPLCを発火（GPIO.HIGHはTrue, 1と同義）
         GPIO.output(GPIO_PIN, GPIO.HIGH)
         time.sleep(1) # 安定するまで待機
+        print(resultDefault())
     
     # 電流を止める（GPIO.LOWはFalse, 0と同義）
     GPIO.output(GPIO_PIN, GPIO.LOW)
