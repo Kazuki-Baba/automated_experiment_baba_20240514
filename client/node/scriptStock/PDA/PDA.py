@@ -33,12 +33,12 @@ ADC.ADS1256_init()
 
 try:
     if args.get:
-    ADC_Value = ADC.ADS1256_GetAll()
-    voltage = ADC_Value[1]*5.0/0x7fffff
+        ADC_Value = ADC.ADS1256_GetAll()
+        voltage = ADC_Value[1]*5.0/0x7fffff
     
-    conc = 0.2746 * voltage -0.0621
+        conc = 0.2746 * voltage -0.0621
 
-    print(conc)
+        print(conc)
     
     if args.on:
         # HPLCを発火（GPIO.HIGHはTrue, 1と同義）
